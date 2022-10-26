@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test REST API</title>
+</head>
+<body>
+<a href="#" onclick="getAll()">get all</a>
+<div id="getAll"></div>
+<script type="text/javascript">
+    async function getAll() {
+        // let url = 'https://localhost:7006/note/';
+        // let response = await fetch(url);
+        //
+        // let commits = await response.json(); // читаем ответ в формате JSON
+        //
+        // alert(commits[0].value);
+        fetch('https://localhost:7006/note/')
+            .then(r => r.json().then(data => data.map(x=>({
+                id: x.id,
+                key: x.key,
+                value: x.value
+            }))))
+            .then(obj =>
+                document.getElementById("getAll").innerHTML = obj.map(x=>'ID: ' + x.id + ' | Key: ' + x.key + ' | Value: ' + x.value + '\n'));
+    }
+</script>
+</body>
+</html>
