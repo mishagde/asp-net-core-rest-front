@@ -3,76 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Test REST API</title>
-    <style type="text/css">
-        body {
-            background-color: darkslategrey;
-        }
-
-        table, th, td {
-            border: 1px solid grey;
-            border-collapse: collapse;
-            padding: 0.5em;
-        }
-
-        th {
-            background-color: #4CAF50;
-        }
-
-        tr:nth-child(even){background-color: #f2f2f2;}
-
-        tr:hover {background-color: #ddd;}
-
-        .header {
-            height: 6em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .header-buttons {
-        }
-
-        .header-button {
-            border: none;
-            color: white;
-            padding: 16px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            transition-duration: 0.4s;
-            cursor: pointer;
-            background-color: white;
-            color: black;
-            border: 2px solid #4CAF50;
-        }
-
-        .header-button:hover {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .table-div {
-            margin: 1em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .table {
-           width: 80%;
-            background-color: darkgray;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="header">
     <div class="header-buttons">
+        <button class="header-button" onclick="showAll()">Получение</button>
+        <button class="header-button" onclick="showInput()">Наполнить</button>
+        <button class="header-button" onclick="showClear()">Очистить</button>
+    </div>
+    <div id="table-div-buttons" class="header-buttons" style="display: none">
         <button class="header-button" onclick="getAll()">Получить все</button>
     </div>
+    <div id="input-div-buttons" class="header-buttons" style="display: none">
+        <button class="header-button" onclick="inputDb()">Отправить</button>
+    </div>
+    <div id="clear-div-buttons" class="header-buttons" style="display: none">
+        <button class="header-button" onclick="clearDb()">Очистить базу</button>
+    </div>
 </div>
-<div class="table-div">
+<div id="table-div" class="table-div">
     <table id="getAll" class="table">
         <tr>
             <th>ID</th>
@@ -81,22 +31,14 @@
         </tr>
     </table>
 </div>
-<script type="text/javascript">
-    async function getAll() {
-        fetch('https://localhost:7006/note/')
-            .then(r => r.json().then(data => data.map(x => ({
-                id: x.id,
-                key: x.key,
-                value: x.value
-            }))))
-            .then(obj => {
-                let table = '';
-                obj.forEach(x => {
-                    table += '<tr><td>' + x.id + '</td><td>' + x.key + '</td><td>' + x.value + '</td></tr>';
-                });
-                document.getElementById("getAll").innerHTML += table;
-            });
-    }
-</script>
+<div id="input-div" class="input-div">
+    <label>
+        <textarea id="input-field" class="input-field"></textarea>
+    </label>
+</div>
+<div id="clear-div" class="clear-div">
+    <div id="clear-response" class="clear-response">Вы еще не запрашивали очистку</div>
+</div>
+<script type="text/javascript" src="index.js"></script>
 </body>
 </html>
